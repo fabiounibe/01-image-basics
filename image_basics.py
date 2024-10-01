@@ -1,7 +1,7 @@
 import numpy as np
 import SimpleITK as sitk
 
-
+#TestToDeletethisLine
 # --- DO NOT CHANGE ---
 def _get_registration_method(atlas_img, img) -> sitk.ImageRegistrationMethod:
     registration_method = sitk.ImageRegistrationMethod()
