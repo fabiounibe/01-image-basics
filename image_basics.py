@@ -1,7 +1,6 @@
 import numpy as np
 import SimpleITK as sitk
 
-
 # --- DO NOT CHANGE ---
 def _get_registration_method(atlas_img, img) -> sitk.ImageRegistrationMethod:
     registration_method = sitk.ImageRegistrationMethod()
@@ -67,7 +66,7 @@ def to_numpy_array(img):
     TO_NUMPY_ARRAY:
     # todo: transform the SimpleITK image to a numpy ndarray (hint: 'GetArrayFromImage')
     """
-    np_img = np.ndarray(sitk.GetArrayFromImage(img))  
+    np_img = sitk.GetArrayFromImage(img) 
 
     return np_img
 
@@ -88,16 +87,20 @@ def to_sitk_image(np_image, reference_img):
 
 def preprocess_rescale_numpy(np_img, new_min_val, new_max_val):
     """
-    PREPROCESS_RESCALE_NUMPY:
-    # todo: rescale the intensities of the np_img to the range [new_min_val, new_max_val].
-    # Use numpy arithmetics only.
+    Rescale the intensities of the NumPy array to the range [new_min_val, new_max_val].
     """
     max_val = np_img.max()
     min_val = np_img.min()
 
+    if max_val == min_val:
+        # Avoid division by zero when all pixel values are the same
+        return np.full(np_img.shape, new_min_val, dtype=np_img.dtype)
+    
+    # Rescale using the formula: (np_img - min_val) / (max_val - min_val) * (new_max_val - new_min_val) + new_min_val
     rescaled_np_img = (np_img - min_val) / (max_val - min_val) * (new_max_val - new_min_val) + new_min_val
 
     return rescaled_np_img
+
 
 
 def preprocess_rescale_sitk(img, new_min_val, new_max_val):
