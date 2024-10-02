@@ -66,7 +66,7 @@ def to_numpy_array(img):
     TO_NUMPY_ARRAY:
     # todo: transform the SimpleITK image to a numpy ndarray (hint: 'GetArrayFromImage')
     """
-    np_img = np.ndarray(sitk.GetArrayFromImage(img))  
+    np_img = sitk.GetArrayFromImage(img) 
 
     return np_img
 
